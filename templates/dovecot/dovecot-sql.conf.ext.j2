@@ -1,4 +1,4 @@
 driver = mysql
-connect = host={{ mysql.host }} dbname={{ mysql.database }} user={{ mysql.user }} password={{ mysql.pass }}
+connect = host={{ mysql.mail.host }} dbname={{ mysql.mail.database }} user={{ mysql.mail.user }} password={{ mysql.mail.pass }}
 default_pass_scheme = CRYPT
 password_query = SELECT email as user, password FROM virtual_users WHERE email='%u';

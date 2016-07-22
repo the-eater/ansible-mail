@@ -1,7 +1,5 @@
 compatibility_level = 2
 queue_directory = /var/spool/postfix
-command_directory = /usr/lib/postfix/sbin
-daemon_directory = /usr/lib/postfix/sbin
 data_directory = /var/lib/postfix
 mail_owner = postfix
 myhostname = {{ hostname }}
@@ -33,8 +31,8 @@ strict_rfc821_envelopes = yes
 meta_directory = /etc/postfix
 shlib_directory = no
 
-smtpd_tls_cert_file={{ ssl.cert }}
-smtpd_tls_key_file={{ ssl.key }}
+smtpd_tls_cert_file={{ ssl.cert.remote }}
+smtpd_tls_key_file={{ ssl.key.remote }}
 smtpd_use_tls=yes
 smtpd_tls_auth_only = yes
 smtpd_sasl_type = dovecot
