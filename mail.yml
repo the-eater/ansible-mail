@@ -32,6 +32,7 @@
         - dovecot-sieve
         - dovecot-mysql
         - dovecot-imapd
+        - dovecot-lmptd
         - dovecot-managesieved
     - name: install spamassassin
       apt: name=spamassassin state=present
@@ -87,7 +88,7 @@
     - name: update dovecot configs
       template: src=templates/dovecot/{{ item.src }} dest=/etc/dovecot/{{ item.dest }}
       with_items:
-        - { src: 'dovecot.conf.j2', dest: 'dovecot.conf.cf' }
+        - { src: 'dovecot.conf.j2', dest: 'dovecot.conf' }
         - { src: 'dovecot-sql.conf.ext.j2', dest: 'dovecot-sql.conf.ext' }
         - { src: 'conf.d/10-auth.conf.j2', dest: 'conf.d/10-auth.conf' }
         - { src: 'conf.d/10-mail.conf.j2', dest: 'conf.d/10-mail.conf' }
@@ -95,6 +96,15 @@
         - { src: 'conf.d/10-ssl.conf.j2', dest: 'conf.d/10-ssl.conf' }
         - { src: 'conf.d/15-mailboxes.conf.j2', dest: 'conf.d/15-mailboxes.conf' }
         - { src: 'conf.d/auth-sql.conf.ext.j2', dest: 'conf.d/auth-sql.conf.ext' }
+      notify:
+        - reload dovecot
+    - name: remove unmanaged dovecot files
+      file: path=/etc/dovecot/{{ item }} state=absent
+      with_items:
+        - dovecot-dict-sql.conf.ext
+        - dovecot-dict-auth.conf.ext
+        - private
+        - README
       notify:
         - reload dovecot
     - name: update spamassasin configs
