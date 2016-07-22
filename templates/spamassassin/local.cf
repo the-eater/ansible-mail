@@ -1,0 +1,12 @@
+report_safe             0
+required_score          6.0
+use_bayes               1
+use_bayes_rules         1
+bayes_auto_learn        1
+skip_rbl_checks         1
+use_razor2              0
+use_dcc                 0
+use_pyzor               0
+
+clear_dns_servers
+dns_server 127.0.0.1

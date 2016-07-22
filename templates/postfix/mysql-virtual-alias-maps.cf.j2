@@ -1,0 +1,5 @@
+user = {{ mysql.user }}
+password = {{ mysql.pass }}
+hosts = {{ mysql.host }}
+dbname = {{ mysql.database }}
+query = SELECT destination FROM virtual_aliases WHERE source='%s'

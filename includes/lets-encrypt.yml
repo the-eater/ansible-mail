@@ -1,0 +1,19 @@
+---
+- name: Operating system dependencies for lets encrypt
+  apt: name={{ item }} state=present
+  with_items:
+    - build-essential
+    - libssl-dev
+    - libffi-dev
+    - python-dev
+    - git
+    - python-pip
+    - python-virtualenv
+    - dialog
+    - libaugeas0
+    - ca-certificates
+    - apache2
+- name: Python cryptography module
+  pip: name=cryptography
+- name: Letsencrypt Python client
+  git: dest=/opt/certbot clone=yes repo=https://github.com/certbot/certbot force=yes

@@ -1,0 +1,5 @@
+user = {{ mysql.user }}
+password = {{ mysql.pass }}
+hosts = {{ mysql.host }}
+dbname = {{ mysql.database }}
+query = SELECT 1 FROM virtual_users WHERE email='%s'
