@@ -42,8 +42,12 @@
         - "{{ ssl.cert.remote }}"
     - block:
       - include: includes/lets-encrypt.yml
+      - name: Check certificate date
+        stat: path=/etc/letsencrypt/live/{{ hostname }}/fullchain.pem
+        register: mtime
       - name: get certificate from letsencrypt
         shell: executable=/bin/bash cd /opt/certbot && ./certbot-auto certonly --email {{ ssl.email }} --domains {{ hostname }} --agree-tos --renew-by-default --standalone --expand
+        when: ansible_date_time.epoch|float - mtime.stat.mtime > 60*60*24*30
         notify:
           - reload postfix
           - reload dovecot
