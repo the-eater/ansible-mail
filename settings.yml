@@ -1,25 +1,25 @@
 hostname: eoc.mx
-  mail_dir: /mail
-  blacklists:
-    - zen.spamhaus.org
-    - bl.spamcop.net
-  ssl:
-    use_letsencrypt: false
-    email: root@eoc.mx
-    key:
-      local: files/ssl/eoc.mx.key
-      remote: /certs/eoc.mx.key
-    cert:
-      local: files/ssl/eoc.mx.crt
-      remote: /certs/eoc.mx.cert
-  mysql:
-    mail:
-      user: root
-      pass: ""
-      host: localhost
-      database: mail
-    cluegetter:
-      user: root
-      pass: ""
-      host: localhost
-      database: cluegetter
+mail_dir: /mail
+blacklists:
+  - zen.spamhaus.org
+  - bl.spamcop.net
+ssl:
+  use_letsencrypt: false
+  email: root@eoc.mx
+  key:
+    local: files/ssl/eoc.mx.key
+    remote: /certs/eoc.mx.key
+  cert:
+    local: files/ssl/eoc.mx.crt
+    remote: /certs/eoc.mx.cert
+mysql:
+  mail:
+    user: root
+    pass: ""
+    host: localhost
+    database: mail
+  cluegetter:
+    user: root
+    pass: ""
+    host: localhost
+    database: cluegetter

@@ -99,6 +99,10 @@
       file: path=/etc/spamassassin/65_debian.cf state=absent
       notify:
         - reload spamassassin
+    - name: update cluegetter configs
+      template: src=templates/cluegetter/cluegetter.conf dest=/etc/cluegetter/cluegetter.conf
+      notify:
+        - reload cluegetter
     - name: creating user vmail
       user: name=vmail home=/var/empty createhome=no
     - name: creating mail dir
