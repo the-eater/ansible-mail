@@ -19,7 +19,6 @@ message-tempfail-score = 8
 message-spamflag-score = 4.5
 breaker-score = 25
 
-
 milter-socket =  "inet:10033@127.0.0.1"
 
 whitelist = "127.0.0.0/8"
@@ -48,7 +47,7 @@ module = 0.1 rspamd
 [elasticsearch]
 enabled = true
 url = "http://127.0.0.1:9200"
-sniff = true
+sniff = false
 
 [http]
 enabled = true
