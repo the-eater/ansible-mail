@@ -100,7 +100,7 @@
       notify:
         - reload spamassassin
     - name: update cluegetter configs
-      template: src=templates/cluegetter/cluegetter.conf dest=/etc/cluegetter/cluegetter.conf
+      template: src=templates/cluegetter/cluegetter.conf.j2 dest=/etc/cluegetter/cluegetter.conf
       notify:
         - reload cluegetter
     - name: creating user vmail
