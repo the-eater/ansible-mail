@@ -14,10 +14,13 @@
       - cluegetter
 
   handlers:
-    - include: handlers/{{ item }}.yml
-      with_items:
-        - elasticsearch
-        - postfix
-        - dovecot
-        - spamassassin
-        - cluegetter
+    - include: handlers/elasticsearch.yml
+      static: true
+    - include: handlers/postfix.yml
+      static: true
+    - include: handlers/dovecot.yml
+      static: true
+    - include: handlers/spamassassin.yml
+      static: true
+    - include: handlers/cluegetter.yml
+      static: true

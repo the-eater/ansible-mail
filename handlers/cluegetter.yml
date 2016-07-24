@@ -1,18 +1,4 @@
 ---
-- name: build cluegetter
-  block:
-  - name: Install cluegetter dependecies
-    apt: name={{ item }} state=present
-    with_items:
-      - go
-      - libspf2-dev
-      - libmilter-dev
-  - name: build deb
-    shell: executable=/bin/bash cd /opt/cluegetter && make deb
-  - name: Install cluegetter
-    apt: deb=/opt/cluegetter/cluegetter.deb
-    notify:
-      - restart cluegetter
 - name: restart cluegetter
   service: name="cluegetter" state=restarted
 - name: reload cluegetter

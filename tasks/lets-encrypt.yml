@@ -1,5 +1,5 @@
 ---
-- name: Operating system dependencies for lets encrypt
+- name: install lets encrypt dependecies
   apt: name={{ item }} state=present
   with_items:
     - build-essential
@@ -12,7 +12,7 @@
     - dialog
     - libaugeas0
     - ca-certificates
-- name: Python cryptography module
+- name: install python lets encrypt dependecies
   pip: name=cryptography
-- name: Letsencrypt Python client
+- name: deploying certbot
   git: dest=/opt/certbot clone=yes repo=https://github.com/certbot/certbot force=yes
