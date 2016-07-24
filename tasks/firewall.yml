@@ -4,7 +4,7 @@
 - name: set default policy
   ufw: state=enabled policy=deny
 - name: allow out
-  ufw: direction=out policy=allow
+  ufw: direction=out rule=allow
 - name: allow ports
   ufw: rule=allow port={{ item }} proto=tcp
   with_items:

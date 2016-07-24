@@ -3,8 +3,8 @@
   become_user: root
   tasks:
     - include_vars: settings.yml
-    - include: includes/{{ item }}.yml
-    - with_items:
+    - include: tasks/{{ item }}.yml
+      with_items:
       - firewall
       - ssl
       - unbound

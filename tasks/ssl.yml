@@ -5,7 +5,7 @@
     - "{{ ssl.key.remote }}"
     - "{{ ssl.cert.remote }}"
 - block:
-  - include: includes/lets-encrypt.yml
+  - include: tasks/lets-encrypt.yml
   - name: Check certificate date
     stat: path=/etc/letsencrypt/live/{{ hostname }}/fullchain.pem
     register: mtime
