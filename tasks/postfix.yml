@@ -1,0 +1,26 @@
+---
+- name: remove exim4
+  apt: name=exim4 state=absent
+- name: install postfix and plugins
+  apt: name={{ item }} state=present
+  with_items:
+    - postfix
+    - postfix-mysql
+- name: update postfix configs
+  template: src=templates/postfix/{{ item.src }} dest=/etc/postfix/{{ item.dest }}
+  with_items:
+    - { src: 'main.cf.j2', dest: 'main.cf' }
+    - { src: 'master.cf.j2', dest: 'master.cf' }
+    - { src: 'mysql-virtual-alias-maps.cf.j2', dest: 'mysql-virtual-alias-maps.cf' }
+    - { src: 'mysql-virtual-mailbox-maps.cf.j2', dest: 'mysql-virtual-mailbox-maps.cf' }
+    - { src: 'mysql-virtual-mailbox-domains.cf.j2', dest: 'mysql-virtual-mailbox-domains.cf' }
+  notify:
+    - reload postfix
+- name: remove unmanaged postfix files
+  file: path=/etc/postfix/{{ item }} state=absent
+  with_items:
+    - postfix-script
+    - post-install
+    - dynamicmaps.cf
+  notify:
+    - reload postfix

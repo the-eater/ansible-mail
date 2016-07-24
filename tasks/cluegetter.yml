@@ -1,0 +1,10 @@
+---
+- name: Clone cluegetter
+  git: dest=/opt/cluegetter clone=yes repo=https://github.com/Freeaqingme/ClueGetter force=yes
+  when: cluegetter.build
+  notify:
+    - build cluegetter
+- name: update cluegetter configs
+  template: src=templates/cluegetter/cluegetter.conf.j2 dest=/etc/cluegetter/cluegetter.conf
+  notify:
+    - reload cluegetter

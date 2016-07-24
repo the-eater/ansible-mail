@@ -1,0 +1,37 @@
+---
+- name: install dovecot and plugins
+  apt: name={{ item }} state=present
+  with_items:
+    - dovecot-sieve
+    - dovecot-mysql
+    - dovecot-imapd
+    - dovecot-lmtpd
+    - dovecot-managesieved
+- name: update dovecot configs
+  template: src=templates/dovecot/{{ item.src }} dest=/etc/dovecot/{{ item.dest }}
+  with_items:
+    - { src: 'dovecot.conf.j2', dest: 'dovecot.conf' }
+    - { src: 'dovecot-sql.conf.ext.j2', dest: 'dovecot-sql.conf.ext' }
+    - { src: 'conf.d/10-auth.conf.j2', dest: 'conf.d/10-auth.conf' }
+    - { src: 'conf.d/10-mail.conf.j2', dest: 'conf.d/10-mail.conf' }
+    - { src: 'conf.d/10-master.conf.j2', dest: 'conf.d/10-master.conf' }
+    - { src: 'conf.d/10-ssl.conf.j2', dest: 'conf.d/10-ssl.conf' }
+    - { src: 'conf.d/15-mailboxes.conf.j2', dest: 'conf.d/15-mailboxes.conf' }
+    - { src: 'conf.d/auth-sql.conf.ext.j2', dest: 'conf.d/auth-sql.conf.ext' }
+  notify:
+    - reload dovecot
+- name: remove unmanaged dovecot files
+  file: path=/etc/dovecot/{{ item }} state=absent
+  with_items:
+    - dovecot-dict-sql.conf.ext
+    - dovecot-dict-auth.conf.ext
+    - private
+    - README
+  notify:
+    - reload dovecot
+- name: start dovecot
+  service: name=dovecot state=started
+- name: creating user vmail
+  user: name=vmail home=/var/empty createhome=no
+- name: creating mail dir
+  file: dest={{ mail_dir }} state=directory owner=vmail group=vmail

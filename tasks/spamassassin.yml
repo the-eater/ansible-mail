@@ -1,0 +1,11 @@
+---
+- name: install spamassassin
+  apt: name=spamassassin state=present
+- name: update spamassasin configs
+  template: src=templates/spamassassin/local.cf dest=/etc/spamassassin/local.cf
+  notify:
+    - reload spamassassin
+- name: remove unmanaged spamassassin files
+  file: path=/etc/spamassassin/65_debian.cf state=absent
+  notify:
+    - reload spamassassin

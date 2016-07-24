@@ -12,6 +12,8 @@ ssl:
   cert:
     local: files/ssl/eoc.mx.crt
     remote: /certs/eoc.mx.cert
+cluegetter:
+  build: false
 mysql:
   mail:
     user: root

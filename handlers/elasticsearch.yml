@@ -1,0 +1,3 @@
+---
+- name: add elasticsearch gpg key
+  shell: wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -; apt-get update;

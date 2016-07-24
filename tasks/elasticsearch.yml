@@ -1,0 +1,5 @@
+---
+- name: Making sure elasticsearch repo is included
+  copy: dest=/etc/apt/sources.list.d/elasticsearch-2.x.list content="deb https://packages.elastic.co/elasticsearch/2.x/debian stable main"
+  notify:
+    - add elasticsearch gpg key

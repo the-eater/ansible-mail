@@ -1,0 +1,32 @@
+---
+- name: making sure remote certs directory exists
+  file: dest={{ item | dirname }} state=directory recurse=yes
+  with_items:
+    - "{{ ssl.key.remote }}"
+    - "{{ ssl.cert.remote }}"
+- block:
+  - include: includes/lets-encrypt.yml
+  - name: Check certificate date
+    stat: path=/etc/letsencrypt/live/{{ hostname }}/fullchain.pem
+    register: mtime
+  - name: get certificate from letsencrypt
+    shell: executable=/bin/bash cd /opt/certbot && ./certbot-auto certonly --email {{ ssl.email }} --domains {{ hostname }} --agree-tos --renew-by-default --standalone --expand
+    when: ansible_date_time.epoch|float - mtime.stat.mtime > 60*60*24*30
+    notify:
+      - reload postfix
+      - reload dovecot
+  - name: linking letsencrypt certificate
+    file: src=/etc/letsencrypt/live/{{ hostname }}/{{ item.src }} dest={{ item.dest }} state=link
+    with_items:
+      - { src: 'fullchain.pem', dest: "{{ ssl.cert.remote }}" }
+      - { src: 'privkey.pem', dest: "{{ ssl.key.remote }}" }
+    notify:
+      - reload postfix
+      - reload dovecot
+  when: ssl.use_letsencrypt
+- name: Copying key and cert to remote
+  copy: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - { src: "{{ ssl.cert.local }}", dest: "{{ ssl.cert.remote }}" }
+    - { src: "{{ ssl.key.local }}", dest: "{{ ssl.key.remote }}" }
+  when: not ssl.use_letsencrypt

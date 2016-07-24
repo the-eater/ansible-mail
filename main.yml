@@ -1,0 +1,23 @@
+- hosts: localhost
+  become: true
+  become_user: root
+  tasks:
+    - include_vars: settings.yml
+    - include: includes/{{ item }}.yml
+    - with_items:
+      - firewall
+      - ssl
+      - unbound
+      - postfix
+      - dovecot
+      - spamassassin
+      - cluegetter
+
+  handlers:
+    - include: handlers/{{ item }}.yml
+      with_items:
+        - elasticsearch
+        - postfix
+        - dovecot
+        - spamassassin
+        - cluegetter
