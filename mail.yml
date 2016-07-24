@@ -5,6 +5,7 @@
     - include_vars: settings.yml
     - name: remove exim4
       apt: name=exim4 state=absent
+    - include: includes/firewall.yml
     - name: install postfix and plugins
       apt: name={{ item }} state=present
       with_items:

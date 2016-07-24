@@ -1,0 +1,17 @@
+---
+- name: install ufw
+  apt: name=ufw state=present
+- name: set default policy
+  ufw: state=enabled policy=deny
+- name: allow out
+  ufw: direction=out policy=allow
+- name: allow ports
+  ufw: rule=allow port={{ item }} proto=tcp
+  with_items:
+    - 22 # SSH
+    - 25 # SMTP
+    - 80 # HTTP
+    - 443 # HTTP/SSL
+    - 465 # SMTP/SSL
+    - 993 # IMAP/SSL
+    - 4190 # Managesieve
