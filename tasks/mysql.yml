@@ -1,0 +1,7 @@
+---
+- name: install mariadb
+  apt: name=mariadb-server state=present
+- name: install mysqldb
+  apt: name=python-mysqldb state=present
+- name: create user
+  mysql_user: name={{ mysql.user }} password={{ mysql.pass }}

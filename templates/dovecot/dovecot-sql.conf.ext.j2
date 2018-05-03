@@ -1,4 +1,4 @@
 driver = mysql
-connect = host={{ mysql.mail.host }} dbname={{ mysql.mail.database }} user={{ mysql.mail.user }} password={{ mysql.mail.pass }}
+connect = host={{ mysql.host }} dbname={{ mysql.mail }} user={{ mysql.user }} password={{ mysql.pass }}
 default_pass_scheme = CRYPT
 password_query = SELECT CONCAT(u.local_part, '@', d.name) as user, password FROM virtual_users u JOIN virtual_domains d ON u.domain_id = d.id WHERE d.name = '%d' AND u.local_part = '%n';

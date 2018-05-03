@@ -13,15 +13,10 @@ ssl:
     local: files/ssl/eoc.mx.crt
     remote: /certs/eoc.mx.cert
 cluegetter:
-  build: false
+  build: true
 mysql:
-  mail:
-    user: root
-    pass: ""
-    host: localhost
-    database: mail
-  cluegetter:
-    user: root
-    pass: ""
-    host: localhost
-    database: cluegetter
+  user: mail
+  pass: henk
+  host: localhost
+  cluegetter: cluegetter
+  mail: mail

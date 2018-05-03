@@ -1,5 +1,5 @@
-user = {{ mysql.mail.user }}
-password = {{ mysql.mail.pass }}
-hosts = {{ mysql.mail.host }}
-dbname = {{ mysql.mail.database }}
+user = {{ mysql.user }}
+password = {{ mysql.pass }}
+hosts = {{ mysql.host }}
+dbname = {{ mysql.mail }}
 query = SELECT 1 FROM virtual_users u JOIN virtual_domains d ON d.id = u.domain_id WHERE CONCAT(u.local_part, '@', d.name) = '%s'

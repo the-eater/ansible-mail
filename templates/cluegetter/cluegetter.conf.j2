@@ -8,11 +8,11 @@ noop = false
 exit-on-panic = false
 
 rdbms-driver           = mysql
-rdbms-user             = {{ mysql.cluegetter.user }}
-rdbms-password         = {{ mysql.cluegetter.pass }}
+rdbms-user             = {{ mysql.user }}
+rdbms-password         = {{ mysql.pass }}
 rdbms-protocol         = tcp
-rdbms-address          = {{ mysql.cluegetter.host }}:3306
-rdbms-database         = {{ mysql.cluegetter.database }}
+rdbms-address          = {{ mysql.host }}:3306
+rdbms-database         = {{ mysql.cluegetter }}
 
 message-reject-score   = 6
 message-tempfail-score = 8

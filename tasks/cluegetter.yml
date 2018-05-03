@@ -1,4 +1,19 @@
 ---
+- name: install git
+  apt: name=git state=present
+  when: cluegetter.build
+- name: install ruby
+  apt: name=ruby state=present
+  when: cluegetter.build
+- name: install ruby-dev
+  apt: name=ruby-dev state=present
+  when: cluegetter.build
+- name: install fpm
+  gem: name=fpm state=present user_install=no
+  when: cluegetter.build
+- name: install go
+  shell: test -d /opt/go || wget -qO /tmp/go.tgz https://storage.googleapis.com/golang/go1.8.1.linux-amd64.tar.gz && tar -C /opt -xf /tmp/go.tgz
+  when: cluegetter.build
 - name: clone cluegetter
   git: dest=/opt/cluegetter clone=yes repo=https://github.com/Freeaqingme/ClueGetter force=yes
   when: cluegetter.build
@@ -9,11 +24,11 @@
   - name: install cluegetter dependecies
     apt: name={{ item }} state=present
     with_items:
-      - go
       - libspf2-dev
       - libmilter-dev
+      - libpcre3-dev
   - name: build deb
-    shell: executable=/bin/bash cd /opt/cluegetter && PATH="/opt/go/bin:$PATH" make deb
+    shell: executable=/bin/bash cd /opt/cluegetter && GOROOT=/opt/go PATH="/opt/go/bin:$PATH" make deb
   - name: install cluegetter
     apt: deb=/opt/cluegetter/cluegetter.deb
     notify:
@@ -21,5 +36,6 @@
   when: cg_git.changed
 - name: update cluegetter configs
   template: src=templates/cluegetter/cluegetter.conf.j2 dest=/etc/cluegetter/cluegetter.conf
+  when: cluegetter.build
   notify:
     - reload cluegetter
